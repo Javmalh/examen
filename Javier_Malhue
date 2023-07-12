@@ -1,0 +1,114 @@
+import numpy as np
+#Creacion departamentos
+edificio=[]
+for i in range(11):
+  
+  if i == 0:
+    edificio.insert(i,[" ","A","B","C","D"])
+  else:
+    edificio.append([])
+    for j in range(5):
+      if j == 0:
+        edificio[i].append(str((11-i)))
+      else:
+        edificio[i].append(" ")
+edi=np.array(edificio)
+#Visulaizar departamentos
+def visual():
+  print(edi)
+  return None
+#Compra departamentos
+def compra(edificio,fila, columna):
+  if fila<=0 or fila>10: #checkea que la fila este dentro del rango comprable
+    print("Error. Piso 0 no existe")
+    return False
+  if columna.upper() == "A":
+    colum=1
+    costo= 3800
+  elif columna.upper() == "B":
+    colum=2
+    costo= 3000
+  elif columna.upper() == "C":
+    colum=3
+    costo= 2800
+  elif columna.upper() == "D":
+    colum=4
+    costo= 3500
+  else: #Checkea que la letra sea A, B, C o D
+    print("Error. Columna no existe")
+    return False
+  
+  if edificio[11-fila][colum]=="x":
+    print("No está disponible")
+    return False
+  else:
+    print(f"El costo del departamento {columna.upper()}{fila} es de {costo}")
+    while True:
+      rut=int(input("Ingrese su rut sin puntos ni numero verificador para confirmar la compra (para volver al menú ingrese 0): "))
+      if rut == 0:
+        return True
+      elif len(str(rut))!=8:
+        print("Error. Rut sin digito verificador tiene 8 digitos")
+      else:
+        compradores.append(rut)
+        edificio[11-fila][colum]="x"
+        print("La operación se ha realizado correctamente")
+        return True
+#Ver lista de compradores
+def listado_compradores(compradores):
+  compradores.sort()
+  for i in compradores:
+    print(i)
+  return None
+#Ventas Totales
+def total(edi):
+  totalA=0
+  totalB=0
+  totalC=0
+  totalD=0
+  for i in range(len(edi)):
+    if edi[i][1]=="x":
+      totalA+=1
+    if edi[i][2]=="x":
+      totalB+=1
+    if edi[i][3]=="x":
+      totalC+=1
+    if edi[i][4]=="x":
+      totalD+=1
+  print(f"Departamento tipo A\tCantidad: {totalA}\tTotal: {totalA*3800}")
+  print(f"Departamento tipo B\tCantidad: {totalB}\tTotal: {totalB*3000}")
+  print(f"Departamento tipo C\tCantidad: {totalC}\tTotal: {totalC*2800}")
+  print(f"Departamento tipo D\tCantidad: {totalD}\tTotal: {totalD*3500}")
+  print(f"Total: {totalA*3800+totalB*3000+totalC*2800+totalD*3500}")
+  return None
+#Salir
+def gudbai():
+  print("Gracias por operar con nosotros.\nDesarrollado por: Javier Malhue\n12/07/2023")
+  return None
+#Menu
+compradores=[]
+try:
+  while True:
+    print("Bienvenido a la aplicación inmobiliaria de \"Casa Feliz\"\n1.\tComprar departamento\n2.\tMostrar departamentos disponibles\n3.\tVer listado de compradores\n4.\tMostrar ganancias\n5.\tSalir")
+    choice=int(input("Por favor seleccione alguna de las opciones anteriores: "))
+    if choice==1:
+      visual()
+      while True:
+        fila=int(input("Elija que piso desea: "))
+        columna=input("Elija que tipo de departamento desea: ")
+        if compra(edi,fila,columna)==True:
+          break
+    elif choice==2:
+      print("Las x son los departamentos ya comprados")
+      visual()
+    elif choice==3:
+      listado_compradores(compradores)
+    elif choice==4:
+      total(edi)
+    elif choice==5:
+      gudbai()
+      break
+    else:
+      print("Error. Ese número no era una opción.")
+except:
+  print("Opsie doopsie. Error inesperado")
